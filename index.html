@@ -2,178 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1024"> 
-    <title>Ziddi Hacks | Official Premium Portal</title>
+    <meta name="viewport" content="width=1024">
+    <title>Ziddi Hacks | Official Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600;700&display=swap');
-
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #f0f2f5; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
 
-        body {
-            background: #050505;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            overflow-x: hidden;
+        /* Neon Header */
+        .header-neon {
+            width: 850px; background: #0b0e14; border: 1px solid #4e44e7;
+            padding: 10px 30px; border-radius: 15px; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: 0 0 15px rgba(78, 68, 231, 0.5); margin-bottom: 20px;
         }
+        .header-neon h2 { color: white; font-family: 'Orbitron'; font-size: 18px; letter-spacing: 1px; }
 
-        /* Neon Header Box */
-        .header-box {
-            width: 850px;
-            margin-bottom: 20px;
-            padding: 15px 40px;
-            border: 1px solid #4e44e7;
-            border-radius: 20px;
-            box-shadow: 0 0 15px #4e44e7;
-            background: rgba(15, 23, 42, 0.9);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo { font-family: 'Orbitron'; font-size: 22px; color: #fff; text-shadow: 0 0 10px #4e44e7; }
-
-        /* Main Container */
+        /* Main Sliding Container */
         .container {
-            position: relative;
-            width: 850px;
-            height: 550px;
-            background: #fff;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            overflow: hidden;
+            position: relative; width: 850px; height: 500px;
+            background: #fff; border-radius: 35px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
-        /* Forms Styling */
         .form-container {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            transition: all 0.6s ease-in-out;
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0 50px;
-            background: white;
-            color: #333;
+            position: absolute; top: 0; height: 100%; width: 50%;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 0 40px; transition: all 0.6s ease-in-out;
         }
 
-        .sign-in-container { left: 0; z-index: 2; }
-        .sign-up-container { left: 0; opacity: 0; z-index: 1; }
+        /* Forms Layout */
+        .sign-in-container { left: 50%; z-index: 2; }
+        .sign-up-container { left: 50%; opacity: 0; z-index: 1; }
 
-        /* Active State Classes */
-        .container.active .sign-in-container { transform: translateX(100%); opacity: 0; z-index: 1; }
-        .container.active .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; }
+        .container.active .sign-in-container { transform: translateX(-100%); opacity: 0; }
+        .container.active .sign-up-container { transform: translateX(-100%); opacity: 1; z-index: 5; }
 
-        /* Overlay Styling */
+        /* Blue Overlay Sliding Part */
         .overlay-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            transition: transform 0.6s ease-in-out;
-            z-index: 100;
+            position: absolute; top: 0; left: 0; width: 50%; height: 100%;
+            overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100;
         }
-
-        .container.active .overlay-container { transform: translateX(-100%); }
+        .container.active .overlay-container { transform: translateX(100%); }
 
         .overlay {
-            background: linear-gradient(135deg, #1a147a, #4e44e7);
-            color: white;
-            position: relative;
-            left: -100%;
-            height: 100%;
-            width: 200%;
-            transform: translateX(0);
+            background: linear-gradient(135deg, #1a147a, #3b32c2);
+            color: white; height: 100%; width: 200%;
+            position: relative; left: 0; transform: translateX(0);
             transition: transform 0.6s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            /* Curved Design from your Screenshot */
+            border-radius: 0 150px 100px 0;
         }
-
-        .container.active .overlay { transform: translateX(50%); }
+        .container.active .overlay { transform: translateX(-50%); border-radius: 150px 0 0 100px; }
 
         .overlay-panel {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 0 40px;
-            text-align: center;
-            top: 0;
-            height: 100%;
-            width: 50%;
+            position: absolute; display: flex; align-items: center;
+            justify-content: center; flex-direction: column; padding: 0 40px;
+            text-align: center; top: 0; height: 100%; width: 50%;
             transition: transform 0.6s ease-in-out;
         }
-
-        .overlay-right { right: 0; }
         .overlay-left { transform: translateX(-20%); }
         .container.active .overlay-left { transform: translateX(0); }
 
-        /* General UI Elements */
-        h1 { margin: 10px 0; font-family: 'Orbitron'; font-size: 24px; }
-        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #eee; background: #f9f9f9; outline: none; }
-        .btn-main { background: #1a147a; color: white; padding: 12px 50px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 15px; transition: 0.3s; }
-        .btn-main:hover { transform: scale(1.05); background: #4e44e7; }
-        
-        .contact-buttons { display: flex; gap: 10px; margin-top: 20px; }
-        .contact-btn { width: 40px; height: 40px; border-radius: 10px; background: #f0f0f0; display: flex; justify-content: center; align-items: center; color: #333; text-decoration: none; }
+        /* Inputs & Buttons */
+        h1 { font-weight: 700; font-size: 32px; margin-bottom: 20px; color: #333; }
+        input { width: 100%; padding: 12px 15px; margin: 8px 0; background: #f1f3f6; border: none; border-radius: 12px; outline: none; }
+        .btn-auth { background: #4e44e7; color: white; border: none; padding: 12px 60px; border-radius: 30px; font-weight: 600; cursor: pointer; margin-top: 15px; box-shadow: 0 5px 15px rgba(78, 68, 231, 0.3); }
+        .btn-ghost { background: transparent; border: 1.5px solid white; color: white; padding: 10px 40px; border-radius: 30px; cursor: pointer; margin-top: 20px; }
 
-        .disclaimer { max-width: 800px; padding: 30px; text-align: center; color: #666; font-size: 12px; }
+        /* Footer Icons */
+        .social-row { display: flex; gap: 15px; margin-top: 20px; }
+        .social-icon { width: 40px; height: 40px; border-radius: 50%; background: #f1f3f6; display: flex; align-items: center; justify-content: center; color: #333; text-decoration: none; border: 1px solid #ddd; }
 
-        #dashboard-wrapper { display: none; position: fixed; inset: 0; z-index: 10000; background: #080b14; }
+        .disclaimer { margin-top: 15px; font-size: 11px; color: #888; text-align: center; }
+
+        #dashboard-wrapper { display: none; position: fixed; inset: 0; z-index: 10000; }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="header-box">
-            <div class="logo">ZIDDI HACKS</div>
-            <div><a href="https://wa.me/923402439417" style="color:white; text-decoration:none; font-size:14px;">SUPPORT</a></div>
+        <div class="header-neon">
+            <h2>ZIDDI HACKS | OFFICIAL PORTAL</h2>
+            <div style="color: white; font-size: 12px;">SUPPORT</div>
         </div>
 
         <div class="container" id="container">
-            <div class="form-container sign-up-container">
-                <h1>Create Account</h1>
-                <input type="email" id="reg-email" placeholder="Email Address">
-                <input type="password" id="reg-pass" placeholder="Password">
-                <button class="btn-main" id="reg-btn">REGISTER</button>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <i class="fas fa-user-plus" style="font-size: 40px; margin-bottom: 15px;"></i>
+                        <h2>Secure Your Access</h2>
+                        <p style="font-size: 12px; margin-top: 10px;">Enter your details and join our elite network of Ziddi Hacks developers.</p>
+                        <button class="btn-ghost" id="signIn">BACK TO LOGIN</button>
+                    </div>
+                    <div class="overlay-panel overlay-right" style="right: 0;">
+                        <i class="fas fa-shield-alt" style="font-size: 40px; margin-bottom: 15px;"></i>
+                        <h2>Welcome Ziddi Hacks</h2>
+                        <p style="font-size: 12px; margin-top: 10px;">Master the craft of digital security. Your journey to excellence starts here!</p>
+                        <button class="btn-ghost" id="signUp">GET STARTED</button>
+                    </div>
+                </div>
             </div>
 
             <div class="form-container sign-in-container">
                 <h1>Sign In</h1>
-                <input type="email" id="login-email" placeholder="Email Address">
+                <input type="text" id="login-email" placeholder="Username / Email">
                 <input type="password" id="login-pass" placeholder="Password">
-                <button class="btn-main" id="login-btn">AUTHORIZE</button>
-                <div class="contact-buttons">
-                    <a href="https://wa.me/923402439417" class="contact-btn"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://whatsapp.com/channel/0029Vb76UKGBVJl9w0NpOp12" class="contact-btn"><i class="fas fa-bullhorn"></i></a>
+                <button class="btn-auth" id="login-btn">AUTHORIZE</button>
+                <p style="font-size: 11px; margin-top: 15px; color: #666;">Official Support Channels</p>
+                <div class="social-row">
+                    <a href="https://wa.me/923402439417" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon"><i class="fas fa-bullhorn"></i></a>
+                    <a href="#" class="social-icon"><i class="fas fa-headset"></i></a>
                 </div>
             </div>
 
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Welcome Back!</h1>
-                        <p>Already have an account? Login to stay secure.</p>
-                        <button class="btn-main" id="signIn" style="background:transparent; border:1px solid white;">SIGN IN</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>New Here?</h1>
-                        <p>Join the elite portal and master the security tools.</p>
-                        <button class="btn-main" id="signUp" style="background:transparent; border:1px solid white;">SIGN UP</button>
-                    </div>
+            <div class="form-container sign-up-container">
+                <h1>Create Account</h1>
+                <input type="text" placeholder="Full Name">
+                <input type="email" id="reg-email" placeholder="Email Address">
+                <input type="password" id="reg-pass" placeholder="Create Password">
+                <button class="btn-auth" id="reg-btn">REGISTER</button>
+                <p style="font-size: 11px; margin-top: 10px; color: #666;">Join our community for updates</p>
+                <div class="social-row">
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon"><i class="fas fa-bullhorn"></i></a>
                 </div>
             </div>
         </div>
