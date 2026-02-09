@@ -1,8 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Your Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCFy28nNtxhkjfpOd0aCfYkjHUwErh1WVQ",
     authDomain: "movie-1e6fc.firebaseapp.com",
@@ -15,126 +13,85 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Auth Toggle & UI Elements
-const authBtn = document.getElementById('auth-btn');
-const authTitle = document.getElementById('auth-title');
-const toggleAuth = document.getElementById('toggle-auth');
+// Auth UI Toggle Logic
+const toggleBtn = document.getElementById('toggle-btn');
+const overlay = document.getElementById('overlay');
+const title = document.getElementById('title');
 let isLogin = true;
 
-toggleAuth.onclick = () => {
+toggleBtn.onclick = () => {
     isLogin = !isLogin;
-    authTitle.innerText = isLogin ? "Sign In" : "Sign Up";
-    authBtn.innerText = isLogin ? "LOGIN" : "REGISTER";
-    toggleAuth.innerText = isLogin ? "New here? Create an account" : "Already have an account? Login";
+    title.innerText = isLogin ? "Sign In" : "Sign Up";
+    toggleBtn.innerText = isLogin ? "SIGN UP" : "SIGN IN";
+    overlay.querySelector('h2').innerHTML = isLogin ? "One of <br> us?" : "New <br> here?";
 };
 
-// Handle Login/Signup
-authBtn.onclick = async () => {
+// Login/Signup Action
+document.getElementById('auth-btn').onclick = async () => {
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
+    const pass = document.getElementById('pass').value;
     try {
-        if (isLogin) {
-            await signInWithEmailAndPassword(auth, email, password);
-        } else {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Account Created!");
-        }
-    } catch (error) {
-        alert(error.message);
-    }
+        if(isLogin) await signInWithEmailAndPassword(auth, email, pass);
+        else await createUserWithEmailAndPassword(auth, email, pass);
+    } catch(e) { alert(e.message); }
 };
 
-// Auth State Observer (Keep user logged in or show dashboard)
+// Listen for Login State
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        document.getElementById('auth-section').style.display = 'none';
-        const dash = document.getElementById('dashboard-wrapper');
-        dash.style.display = 'block';
+        document.getElementById('login-page').style.display = 'none';
+        document.getElementById('dashboard-wrapper').style.display = 'block';
         loadDashboard(user.email);
     } else {
-        document.getElementById('auth-section').style.display = 'block';
+        document.getElementById('login-page').style.display = 'flex';
         document.getElementById('dashboard-wrapper').style.display = 'none';
     }
 });
 
-// Dashboard Content (Aapka Professional 3D Dashboard Code)
-function loadDashboard(userEmail) {
-    const dashboardHTML = `
+function loadDashboard(email) {
+    const dashHTML = `
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-        .dash-body { padding: 20px; color: white; background: #0f172a; min-height: 100vh; }
-        .dashboard-logo { font-family: 'Orbitron'; font-size: 28px; text-align: center; color: #4e44e7; text-shadow: 0 0 15px rgba(78,68,231,0.8); margin-bottom: 30px; }
-        .header-nav { display: flex; justify-content: space-between; margin-bottom: 20px; }
-        .btn-3d { padding: 10px 15px; background: #0f172a; border: none; border-radius: 12px; color: white; box-shadow: 8px 8px 16px #080c16, -8px -8px 16px #16223e; cursor: pointer; transition: 0.3s; }
-        .btn-3d:hover { transform: translateY(-3px); color: #4e44e7; }
-        .main-hero-box { background: #0f172a; border-radius: 25px; box-shadow: 10px 10px 20px #080c16, -10px -10px 20px #16223e; padding: 25px; margin-bottom: 30px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
-        .stat-card-3d { background: #0f172a; padding: 15px; border-radius: 15px; box-shadow: inset 5px 5px 10px #080c16, inset -5px -5px 10px #16223e; text-align: center; }
-        .channel-info { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 15px; margin-top: 20px; font-size: 12px; line-height: 1.5; color: #cbd5e1; }
-        .tool-row { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 15px; border-radius: 15px; box-shadow: 8px 8px 16px #080c16, -8px -8px 16px #16223e; margin-bottom: 12px; }
-        .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; background: rgba(15,23,42,0.9); padding: 12px 35px; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-icon { font-size: 22px; color: #94a3b8; cursor: pointer; }
+        .main-dash { background: #080b14; color: white; min-height: 100vh; padding: 20px; font-family: 'Poppins'; }
+        .premium-head { font-family: 'Orbitron'; font-size: 24px; text-align: center; color: #4e44e7; text-shadow: 0 0 10px #4e44e7; margin: 20px 0; }
+        .nav-3d { display: flex; justify-content: space-around; margin-bottom: 20px; }
+        .btn-3d { padding: 10px 20px; background: #080b14; border: none; border-radius: 12px; color: white; box-shadow: 8px 8px 16px #05070d, -8px -8px 16px #0b0f1b; cursor: pointer; transition: 0.3s; }
+        .btn-3d:hover { transform: translateY(-5px); color: #4e44e7; }
+        .yt-box { background: #080b14; border-radius: 25px; box-shadow: 10px 10px 20px #05070d, -10px -10px 20px #0b0f1b; padding: 25px; margin-bottom: 30px; }
+        .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: #080b14; padding: 15px; border-radius: 15px; box-shadow: inset 5px 5px 10px #05070d, inset -5px -5px 10px #0b0f1b; text-align: center; }
+        .stat-card h3 { font-family: 'Orbitron'; color: #4e44e7; font-size: 18px; }
+        .disclaimer { font-size: 11px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; line-height: 1.5; color: #aaa; }
+        .tool-card { display: flex; justify-content: space-between; align-items: center; background: #080b14; padding: 15px; border-radius: 15px; box-shadow: 8px 8px 16px #05070d, -8px -8px 16px #0b0f1b; margin-bottom: 12px; }
+        .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 50px; background: rgba(10,15,25,0.9); padding: 15px 40px; border-radius: 50px; }
     </style>
-
-    <div class="dash-body">
-        <header class="header-nav">
-            <div class="dashboard-logo">DASHBOARD</div>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-3d" id="logout-btn"><i class="fas fa-power-off"></i> Logout</button>
+    <div class="main-dash">
+        <h1 class="premium-head">DASHBOARD</h1>
+        <div class="nav-3d">
+            <button class="btn-3d"><i class="fas fa-home"></i> Home</button>
+            <button class="btn-3d" id="logout-btn"><i class="fas fa-power-off"></i> Logout</button>
+        </div>
+        <div class="yt-box">
+            <div class="stats">
+                <div class="stat-card"><p>Members</p><h3>1,240</h3></div>
+                <div class="stat-card"><p>Clock</p><h3 id="clock">00:00:00</h3></div>
             </div>
-        </header>
-
-        <div class="main-hero-box">
-            <div class="stats-grid">
-                <div class="stat-card-3d"><h4>Members</h4><p>1,240</p></div>
-                <div class="stat-card-3d"><h4>Tools</h4><p>48</p></div>
-                <div class="stat-card-3d"><h4>Clock</h4><p id="live-clock">00:00</p></div>
-            </div>
-            <div class="channel-info">
-                <p>⚠️ <b>DISCLAIMER:</b> Is WhatsApp Channel ka tamam content sirf educational purposes ke liye hai. Hum illegal activities ko support nahi karte.</p>
-                <a href="https://whatsapp.com/channel/0029Vb76UKGBVJl9w0NpOp12" target="_blank" class="btn-3d" style="display:block; text-align:center; margin-top:10px; background:#25d366;">Follow Channel</a>
+            <div class="disclaimer">
+                <p>⚠️ <b>DISCLAIMER:</b> Content sirf educational purposes ke liye hai. Stay Legal • Stay Ethical.</p>
+                <a href="https://whatsapp.com/channel/0029Vb76UKGBVJl9w0NpOp12" class="btn-3d" style="display:block; text-align:center; margin-top:10px; background:#25d366;">Follow Channel</a>
             </div>
         </div>
-
-        <h3 style="font-family:Orbitron; margin-bottom:15px; color:#4e44e7;">PREMIUM TOOLS</h3>
-        <div class="tool-row">
-            <div><strong>IG Recovery Pro</strong><br><small>Security audit tool</small></div>
-            <button class="btn-3d">OPEN</button>
+        <div id="tool-list">
+            <h3 style="font-family:Orbitron; font-size:16px; margin-bottom:15px; color:#4e44e7;">TOOLS</h3>
+            <div class="tool-card"><div><strong>System Bypass</strong></div><button class="btn-3d">OPEN</button></div>
         </div>
-        
-        <div id="profile-section" style="display:none; text-align:center;" class="main-hero-box">
-            <img src="https://ui-avatars.com/api/?name=User&background=4e44e7&color=fff" style="border-radius:50%; width:80px; margin-bottom:10px;">
-            <h4>${userEmail}</h4>
-            <input type="text" placeholder="Full Name" style="width:80%; padding:8px; margin:5px; border-radius:5px; border:none;">
-            <button class="btn-3d">Save</button>
-        </div>
-
         <div class="bottom-nav">
-            <i class="fas fa-home nav-icon" id="show-home"></i>
-            <i class="fas fa-user-circle nav-icon" id="show-profile"></i>
+             <i class="fas fa-th-large" style="color:#4e44e7; font-size:22px;"></i>
+             <i class="fas fa-user-circle" style="color:#94a3b8; font-size:22px;"></i>
         </div>
-    </div>
-    `;
+    </div>`;
 
-    document.getElementById('dashboard-wrapper').innerHTML = dashboardHTML;
-
-    // Internal Dashboard Logic
+    document.getElementById('dashboard-wrapper').innerHTML = dashHTML;
     document.getElementById('logout-btn').onclick = () => signOut(auth);
-    
-    // Tab Switching
-    document.getElementById('show-profile').onclick = () => {
-        document.querySelector('.stats-grid').parentElement.style.display = 'none';
-        document.getElementById('profile-section').style.display = 'block';
-    }
-    document.getElementById('show-home').onclick = () => {
-        document.querySelector('.stats-grid').parentElement.style.display = 'block';
-        document.getElementById('profile-section').style.display = 'none';
-    }
-
-    // Live Clock
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString();
-    }, 1000);
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
 }
