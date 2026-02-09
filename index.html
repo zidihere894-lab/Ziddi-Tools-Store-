@@ -2,219 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024"> 
     <title>Ziddi Hacks | Official Premium Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Aapka Sara CSS Waise Ka Waisa Hi Hai */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600;700&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-
-        body {
-            background: #0f0c29;
-            background: linear-gradient(to right, #24243e, #101025, #000000);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;
-            overflow-x: hidden;
-        }
-
-        /* Multi-Color Glowing Logo */
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            display: flex;
-            gap: 5px;
-        }
-        
-        .logo span {
-            display: inline-block;
-            animation: glow-animation 1s infinite alternate;
-        }
-
-        @keyframes glow-animation {
-            0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
-            25% { color: #00ff00; text-shadow: 0 0 10px #00ff00; }
-            50% { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
-            75% { color: #ffff00; text-shadow: 0 0 10px #ffff00; }
-            100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
-        }
-
-        /* Delay for each letter */
-        .logo span:nth-child(1) { animation-delay: 0.1s; }
-        .logo span:nth-child(2) { animation-delay: 0.2s; }
-        .logo span:nth-child(3) { animation-delay: 0.3s; }
-        .logo span:nth-child(4) { animation-delay: 0.4s; }
-        .logo span:nth-child(5) { animation-delay: 0.5s; }
-        .logo span:nth-child(7) { animation-delay: 0.6s; }
-        .logo span:nth-child(8) { animation-delay: 0.7s; }
-        .logo span:nth-child(9) { animation-delay: 0.8s; }
-        .logo span:nth-child(10) { animation-delay: 0.9s; }
-
-        /* Navbar & Interaction */
-        .navbar {
-            width: 100%; padding: 25px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
-        }
-
-        .nav-links a { 
-            color: white; text-decoration: none; margin-left: 20px; 
-            transition: 0.3s ease; display: inline-block;
-        }
+        body { background: #0f0c29; background: linear-gradient(to right, #24243e, #101025, #000000); min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: white; overflow-x: hidden; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: 3px; display: flex; gap: 5px; }
+        .logo span { display: inline-block; animation: glow-animation 1s infinite alternate; }
+        @keyframes glow-animation { 0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } 25% { color: #00ff00; text-shadow: 0 0 10px #00ff00; } 50% { color: #00ffff; text-shadow: 0 0 10px #00ffff; } 75% { color: #ffff00; text-shadow: 0 0 10px #ffff00; } 100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; } }
+        .navbar { width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; transition: 0.3s ease; display: inline-block; }
         .nav-links a:hover { transform: translateY(-5px); color: #4e44e7; }
-
-        /* Main Container Interaction */
         .main-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 0; }
-        
-        .container {
-            position: relative; width: 850px; max-width: 95vw; min-height: 550px;
-            background: #fff; border-radius: 40px; overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-            transition: transform 0.4s ease;
-        }
-        .container:hover { transform: translateY(-10px); }
-
-        /* Form Layout */
-        .form-container {
-            position: absolute; top: 0; width: 50%; height: 100%;
-            transition: all 0.6s ease-in-out; display: flex;
-            flex-direction: column; align-items: center; justify-content: center;
-            padding: 0 40px; background: white; color: #333;
-        }
+        .container { position: relative; width: 850px; max-width: 95vw; min-height: 550px; background: #fff; border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.6); transition: transform 0.4s ease; }
+        .form-container { position: absolute; top: 0; width: 50%; height: 100%; transition: all 0.6s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 40px; background: white; color: #333; }
         .sign-in-container { left: 50%; z-index: 2; }
         .sign-up-container { left: 50%; opacity: 0; z-index: 1; }
         .container.active .sign-in-container { transform: translateX(-100%); opacity: 0; }
         .container.active .sign-up-container { transform: translateX(-100%); opacity: 1; z-index: 5; }
-
-        .overlay-container {
-            position: absolute; top: 0; left: 0; width: 50%; height: 100%;
-            overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100;
-        }
+        .overlay-container { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; transition: transform 0.6s ease-in-out; z-index: 100; }
         .container.active .overlay-container { transform: translateX(100%); }
-
-        .overlay {
-            background: linear-gradient(135deg, #1a147a, #4e44e7);
-            color: white; height: 100%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-            padding: 0 30px; border-radius: 0 150px 100px 0; transition: 0.6s;
-        }
+        .overlay { background: linear-gradient(135deg, #1a147a, #4e44e7); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 30px; border-radius: 0 150px 100px 0; transition: 0.6s; }
         .container.active .overlay { border-radius: 150px 0 0 100px; }
-
-        /* Interaction Elements (Blue Hover) */
-        input {
-            width: 100%; padding: 12px 15px; border: none; outline: none;
-            background: #f0f0f0; border-radius: 12px; margin: 8px 0;
-            transition: 0.3s;
-        }
-        input:focus, input:hover { background: #e0e7ff; transform: scale(1.02); }
-
-        .btn-main {
-            background: #1a147a; color: white; padding: 12px 55px;
-            border: none; border-radius: 50px; cursor: pointer; margin-top: 15px;
-            transition: 0.3s; font-weight: 600;
-        }
-        .btn-main:hover { background: #0000ff; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,255,0.4); }
-
-        /* Social Icons Interaction */
+        input { width: 100%; padding: 12px 15px; border: none; outline: none; background: #f0f0f0; border-radius: 12px; margin: 8px 0; transition: 0.3s; }
+        .btn-main { background: #1a147a; color: white; padding: 12px 55px; border: none; border-radius: 50px; cursor: pointer; margin-top: 15px; transition: 0.3s; font-weight: 600; }
         .contact-buttons { display: flex; gap: 15px; margin-top: 15px; }
-        .contact-btn {
-            width: 45px; height: 45px; border-radius: 12px; background: #f0f0f0;
-            display: flex; justify-content: center; align-items: center;
-            text-decoration: none; color: #333; transition: 0.3s;
-        }
-        .contact-btn:hover { background: #0000ff; color: white; transform: translateY(-8px) rotate(10deg); }
-
-        /* Disclaimer & Footer */
+        .contact-btn { width: 45px; height: 45px; border-radius: 12px; background: #f0f0f0; display: flex; justify-content: center; align-items: center; text-decoration: none; color: #333; transition: 0.3s; }
         .disclaimer { max-width: 800px; padding: 30px; text-align: center; opacity: 0.6; transition: 0.3s; }
-        .disclaimer:hover { opacity: 1; transform: scale(1.05); color: #00ffff; }
-
-        footer {
-            width: 100%; padding: 20px; text-align: center; font-size: 12px;
-            border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5);
-        }
+        footer { width: 100%; padding: 20px; text-align: center; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); }
+        
+        /* Dashboard Wrapper (Initially Hidden) */
+        #dashboard-wrapper { display: none; position: fixed; inset: 0; z-index: 999999; background: #0f172a; overflow-y: auto; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">
-            <span>Z</span><span>I</span><span>D</span><span>D</span><span>I</span>
-            <span>&nbsp;</span>
-            <span>H</span><span>A</span><span>C</span><span>K</span><span>S</span>
-        </div>
-        <div class="nav-links">
-            <a href="#">HOME</a>
-            <a href="https://wa.me/923402439417">SUPPORT</a>
-        </div>
-    </nav>
+    <div id="login-page">
+        <nav class="navbar">
+            <div class="logo"><span>Z</span><span>I</span><span>D</span><span>D</span><span>I</span><span>&nbsp;</span><span>H</span><span>A</span><span>C</span><span>K</span><span>S</span></div>
+            <div class="nav-links"><a href="#">HOME</a><a href="https://wa.me/923402439417">SUPPORT</a></div>
+        </nav>
 
-    <div class="main-wrapper">
-        <div class="container" id="container">
-            <div class="overlay-container">
-                <div class="overlay">
-                    <i class="fas fa-user-shield" style="font-size: 55px; margin-bottom: 20px;"></i>
-                    <h2 id="side-title" style="font-size: 28px;">Welcome Ziddi Hacks</h2>
-                    <p style="margin: 10px 0 20px;">The most powerful security portal.</p>
-                    <button class="btn-ghost" id="toggleBtn" style="background:transparent; border:1px solid white; color:white; padding:10px 40px; border-radius:50px; cursor:pointer;">SIGN UP</button>
+        <div class="main-wrapper">
+            <div class="container" id="container">
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <i class="fas fa-user-shield" style="font-size: 55px; margin-bottom: 20px;"></i>
+                        <h2 id="side-title" style="font-size: 28px;">Welcome Ziddi Hacks</h2>
+                        <p style="margin: 10px 0 20px;">The most powerful security portal.</p>
+                        <button id="toggleBtn" style="background:transparent; border:1px solid white; color:white; padding:10px 40px; border-radius:50px; cursor:pointer;">SIGN UP</button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-container sign-in-container">
-                <h1>Sign In</h1>
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-                <button class="btn-main">AUTHORIZE</button>
-                <div class="contact-buttons">
-                    <a href="https://wa.me/923402439417" class="contact-btn"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://whatsapp.com/channel/0029Vb76UKGBVJl9w0NpOp12" class="contact-btn"><i class="fas fa-bullhorn"></i></a>
-                    <a href="https://wa.me/923402439417?text=Assalamualaikum Sir! I Need Help?" class="contact-btn"><i class="fas fa-headset"></i></a>
+                <div class="form-container sign-in-container">
+                    <h1>Sign In</h1>
+                    <input type="email" id="login-email" placeholder="Email Address">
+                    <input type="password" id="login-pass" placeholder="Password">
+                    <button class="btn-main" id="login-btn">AUTHORIZE</button>
                 </div>
-            </div>
 
-            <div class="form-container sign-up-container">
-                <h1>Sign Up</h1>
-                <input type="text" placeholder="Username">
-                <input type="email" placeholder="Email Address">
-                <input type="password" placeholder="Create Password">
-                <button class="btn-main">REGISTER</button>
-                <div class="contact-buttons">
-                    <a href="https://wa.me/923402439417" class="contact-btn"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://whatsapp.com/channel/0029Vb76UKGBVJl9w0NpOp12" class="contact-btn"><i class="fas fa-bullhorn"></i></a>
-                    <a href="https://wa.me/923402439417?text=Assalamualaikum Sir! I Need Help?" class="contact-btn"><i class="fas fa-headset"></i></a>
+                <div class="form-container sign-up-container">
+                    <h1>Sign Up</h1>
+                    <input type="email" id="reg-email" placeholder="Email Address">
+                    <input type="password" id="reg-pass" placeholder="Create Password">
+                    <button class="btn-main" id="reg-btn">REGISTER</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="disclaimer">
-        <h3>DISCLAIMER</h3>
-        <p>Unauthorized access is strictly prohibited. Ziddi Hacks provides tools for security awareness and educational testing only. Master the digital world responsibly.</p>
-    </div>
+    <div id="dashboard-wrapper"></div>
 
-    <footer>
-        &copy; 2026 ZIDDI HACKS | PREMUM SECURITY PORTAL
-    </footer>
-
-    <script>
-        const container = document.getElementById('container');
-        const toggleBtn = document.getElementById('toggleBtn');
-        const sideTitle = document.getElementById('side-title');
-
-        toggleBtn.addEventListener('click', () => {
-            container.classList.toggle('active');
-            if (container.classList.contains('active')) {
-                toggleBtn.innerHTML = "SIGN IN";
-                sideTitle.innerHTML = "Secure Your Access";
-            } else {
-                toggleBtn.innerHTML = "SIGN UP";
-                sideTitle.innerHTML = "Welcome Ziddi Hacks";
-            }
-        });
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
