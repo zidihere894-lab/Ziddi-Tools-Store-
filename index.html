@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziddi Hacks | Official Access</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS stays here for fast loading */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body { background: #f0f2f5; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-container { background: #fff; width: 90%; max-width: 400px; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; }
+        .auth-container h2 { margin-bottom: 20px; color: #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; outline: none; }
+        .btn-main { width: 100%; padding: 12px; background: #4e44e7; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-main:hover { opacity: 0.9; transform: scale(1.02); }
+        .toggle-link { margin-top: 15px; font-size: 14px; color: #666; cursor: pointer; display: block; }
+        #dashboard-wrapper { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 9999; overflow-y: auto; }
+    </style>
+</head>
+<body>
+
+    <div id="auth-section" class="auth-container">
+        <h2 id="auth-title">Sign In</h2>
+        <input type="email" id="email" placeholder="Email Address">
+        <input type="password" id="password" placeholder="Password">
+        <button id="auth-btn" class="btn-main">LOGIN</button>
+        <span class="toggle-link" id="toggle-auth">New here? Create an account</span>
+    </div>
+
+    <div id="dashboard-wrapper"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
