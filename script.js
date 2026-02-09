@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCFy28nNtxhkjfpOd0aCfYkjHUwErh1WVQ",
     authDomain: "movie-1e6fc.firebaseapp.com",
@@ -14,12 +13,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// --- AAPKA UI TOGGLE LOGIC ---
+// UI Toggle Logic
 const container = document.getElementById('container');
 const toggleBtn = document.getElementById('toggleBtn');
 const sideTitle = document.getElementById('side-title');
 
-toggleBtn.addEventListener('click', () => {
+toggleBtn.onclick = () => {
     container.classList.toggle('active');
     if (container.classList.contains('active')) {
         toggleBtn.innerHTML = "SIGN IN";
@@ -28,48 +27,37 @@ toggleBtn.addEventListener('click', () => {
         toggleBtn.innerHTML = "SIGN UP";
         sideTitle.innerHTML = "Welcome Ziddi Hacks";
     }
-});
+};
 
-// --- AUTHENTICATION LOGIC ---
+// Login Action
+document.getElementById('login-btn').onclick = async () => {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-pass').value;
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        alert("Authorized! Redirecting...");
+    } catch (e) { alert(e.message); }
+};
 
-// Signup Process
-const regBtn = document.getElementById('reg-btn');
-if(regBtn) {
-    regBtn.addEventListener('click', async () => {
-        const email = document.getElementById('reg-email').value;
-        const pass = document.getElementById('reg-pass').value;
-        if(!email || !pass) return alert("Fill all fields!");
+// Register Action
+document.getElementById('reg-btn').onclick = async () => {
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-pass').value;
+    try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        alert("Registered Successfully!");
+    } catch (e) { alert(e.message); }
+};
 
-        try {
-            await createUserWithEmailAndPassword(auth, email, pass);
-            alert("Registration Successful!");
-        } catch (error) {
-            alert(error.message);
-        }
-    });
-}
-
-// Login Process
-const loginBtn = document.getElementById('login-btn');
-if(loginBtn) {
-    loginBtn.addEventListener('click', async () => {
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-pass').value;
-        if(!email || !pass) return alert("Fill all fields!");
-
-        try {
-            await signInWithEmailAndPassword(auth, email, pass);
-            alert("Authorized! Redirecting...");
-        } catch (error) {
-            alert(error.message);
-        }
-    });
-}
-
-// Check if user is already logged in
+// IMPORTANT: Dashboard Open Logic
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("Access Granted to:", user.email);
-        // User login hai, aap yahan redirect kar sakte hain
+        // Hide Login Page, Show Dashboard
+        document.getElementById('auth-page').style.display = 'none';
+        document.getElementById('dashboard-section').style.display = 'block';
+        document.body.style.background = "#080b14"; // Darker dashboard theme
+    } else {
+        document.getElementById('auth-page').style.display = 'flex';
+        document.getElementById('dashboard-section').style.display = 'none';
     }
 });
